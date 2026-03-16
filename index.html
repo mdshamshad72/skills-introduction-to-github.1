@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THE HUNGRY SPOT – Pure Veg Fast Food</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header">
+    <div class="header-inner container">
+      <div class="brand">
+        <span class="brand-icon">🥗</span>
+        <div>
+          <h1 class="brand-name">THE HUNGRY SPOT</h1>
+          <p class="brand-tagline">Pure Veg Fast Food · Cloud Kitchen</p>
+        </div>
+      </div>
+      <nav class="site-nav">
+        <a href="#menu">Menu</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <button class="btn btn-outline" id="adminToggleBtn">⚙ Manage</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="hero-content container">
+      <p class="hero-badge">🌿 100% Pure Vegetarian</p>
+      <h2 class="hero-title">Fresh, Fast &amp; Delicious<br/>Delivered to You</h2>
+      <p class="hero-sub">Tasty cloud-kitchen meals made with love – updated daily with seasonal specials.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-primary">Browse Menu</a>
+        <a href="#contact" class="btn btn-outline-light">Order Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FILTER BAR ========== -->
+  <section class="filter-bar" id="menu">
+    <div class="container filter-inner">
+      <span class="filter-label">Filter:</span>
+      <div class="filter-chips" id="filterChips">
+        <button class="chip active" data-cat="All">All</button>
+      </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Search items…" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MENU GRID ========== -->
+  <section class="menu-section container">
+    <h2 class="section-title">Our Menu</h2>
+    <div class="menu-grid" id="menuGrid">
+      <!-- Cards injected by JS -->
+    </div>
+    <p class="empty-msg" id="emptyMsg" style="display:none;">No items found. Try a different search or category.</p>
+  </section>
+
+  <!-- ========== ABOUT ========== -->
+  <section class="about-section" id="about">
+    <div class="container about-inner">
+      <div class="about-text">
+        <h2 class="section-title">About The Hungry Spot</h2>
+        <p>
+          <strong>The Hungry Spot</strong> is a cloud-based pure vegetarian kitchen committed to serving
+          fresh, flavourful meals made from the finest ingredients. No artificial additives –
+          just honest home-style cooking delivered fast.
+        </p>
+        <p>
+          Our menu is updated regularly with seasonal specials, regional favourites, and
+          customer-requested dishes. Every bite is a burst of freshness!
+        </p>
+        <ul class="feature-list">
+          <li>🌿 100% Vegetarian ingredients</li>
+          <li>🚀 Quick preparation &amp; delivery</li>
+          <li>🔄 Menu updated daily</li>
+          <li>❤️ Made with love in a hygienic kitchen</li>
+        </ul>
+      </div>
+      <div class="about-image">🍱</div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="contact-section" id="contact">
+    <div class="container contact-inner">
+      <h2 class="section-title light">Place an Order / Contact Us</h2>
+      <form class="order-form" id="orderForm">
+        <div class="form-row">
+          <input type="text" id="custName" placeholder="Your Name" required />
+          <input type="tel" id="custPhone" placeholder="Phone Number" required />
+        </div>
+        <input type="text" id="custAddress" placeholder="Delivery Address" required />
+        <textarea id="custOrder" placeholder="What would you like to order? (e.g. 2x Paneer Burger, 1x Veg Wrap)" rows="3" required></textarea>
+        <button type="submit" class="btn btn-primary">🛒 Place Order</button>
+      </form>
+      <div class="contact-info">
+        <p>📞 +91-98765-43210</p>
+        <p>📧 hello@thehungryspot.in</p>
+        <p>⏰ Open: 10 AM – 10 PM (All Days)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TOAST ========== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ========== ADMIN PANEL ========== -->
+  <div class="admin-overlay" id="adminOverlay">
+    <div class="admin-panel" id="adminPanel">
+      <div class="admin-header">
+        <h2>⚙ Menu Manager</h2>
+        <button class="admin-close" id="adminCloseBtn">✕</button>
+      </div>
+
+      <!-- Add / Edit Form -->
+      <form class="admin-form" id="itemForm">
+        <input type="hidden" id="editId" />
+        <div class="form-row">
+          <input type="text" id="itemName" placeholder="Item Name *" required />
+          <input type="number" id="itemPrice" placeholder="Price (₹) *" min="1" required />
+        </div>
+        <div class="form-row">
+          <input type="text" id="itemCategory" placeholder="Category (e.g. Burger, Wrap)" required />
+          <select id="itemBadge">
+            <option value="">No Badge</option>
+            <option value="bestseller">⭐ Best Seller</option>
+            <option value="new">🆕 New</option>
+            <option value="spicy">🌶 Spicy</option>
+            <option value="healthy">💚 Healthy</option>
+          </select>
+        </div>
+        <textarea id="itemDesc" placeholder="Short description" rows="2"></textarea>
+        <input type="text" id="itemEmoji" placeholder="Food emoji (e.g. 🍔)" maxlength="4" />
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" id="clearFormBtn">Clear</button>
+          <button type="submit" class="btn btn-primary" id="formSubmitBtn">Add Item</button>
+        </div>
+      </form>
+
+      <!-- Item List -->
+      <div class="admin-list" id="adminList">
+        <!-- rows injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>🥗 <strong>THE HUNGRY SPOT</strong> – Pure Veg Fast Food | Cloud Kitchen</p>
+      <p class="footer-copy">&copy; <span id="year"></span> The Hungry Spot. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
